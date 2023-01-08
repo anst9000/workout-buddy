@@ -3,15 +3,20 @@ import axios from 'axios'
 import { FaTrashAlt } from 'react-icons/fa'
 import { formatDistanceToNow } from 'date-fns'
 import { useWorkoutContext } from '../hooks/useWorkoutContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutContext()
+  const { user } = useAuthContext()
 
   const handleClick = async () => {
+    if (!user) return
+
     try {
       const response = await axios.delete(`/api/workouts/${workout._id}`, {
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
         },
       })
 
