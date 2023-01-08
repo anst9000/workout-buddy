@@ -10,6 +10,7 @@ app.use(logger('common', {stream: fs.createWriteStream('./logs/access.log', {fla
 app.use(logger('dev'))
 
 const workoutRoutes = require('./routes/workouts')
+const userRoutes = require('./routes/user')
 
 const PORT = process.env.PORT || 4000
 
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 
 // routes
 app.use('/api/workouts', workoutRoutes)
+app.use('/api/user', userRoutes)
 
 // connect to db
 if (connectDB()) {
